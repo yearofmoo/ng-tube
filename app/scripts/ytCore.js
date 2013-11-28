@@ -1,7 +1,44 @@
 angular.module('ytCore', [])
 
-  .constant('YT_VIDEO_URL', 'https://gdata.youtube.com/feeds/api/videos/{ID}?v=2&alt=json&callback=JSON_CALLBACK')
-  .constant('YT_SEARCH_URL', 'https://gdata.youtube.com/feeds/api/videos/?q={Q}&v=2&alt=json&callback=JSON_CALLBACK')
+  .constant('YT_VIDEO_URL',   'https://gdata.youtube.com/feeds/api/videos/{ID}?v=2&alt=json&callback=JSON_CALLBACK')
+  .constant('YT_SEARCH_URL',  'https://gdata.youtube.com/feeds/api/videos/?q={Q}&v=2&alt=json&callback=JSON_CALLBACK')
+  .constant('YT_POPULAR_URL', 'https://gdata.youtube.com/feeds/api/standardfeeds/{FEED}?alt=json&callback=JSON_CALLBACK')
+  .constant('YT_EMBED_URL',   'http://www.youtube.com/embed/{ID}?autoplay=1')
+
+  .factory('ytFeed', ['ytVideos', 'YT_POPULAR_URL',
+              function(ytVideos,   YT_POPULAR_URL) {
+    return function(feed) {
+      var url = YT_POPULAR_URL.replace('{FEED}', feed);
+      return ytVideos(url);
+    }
+  }])
+
+  .factory('ytSearch', ['ytVideos', 'YT_SEARCH_URL',
+                function(ytVideos,   YT_SEARCH_URL) {
+    return function(q) {
+      var url = YT_SEARCH_URL.replace('{Q}', q || '');
+      return ytVideos(url);
+    }
+  }])
+
+  .factory('ytVideos', ['$q', '$http', 'ytVideoPrepare',
+                function($q,   $http,   ytVideoPrepare) {
+    return function(url) {
+      var defer = $q.defer();
+      $http.jsonp(url).
+        success(function(response) {
+          var results = [];
+          angular.forEach(response.feed.entry, function(entry) {
+            results.push(ytVideoPrepare(entry));
+          });
+          defer.resolve(results);
+        }).
+        error(function() {
+          return 'failure';
+        });
+      return defer.promise;
+    };
+  }])
 
   .factory('ytVideo', ['$q', '$http', 'ytVideoPrepare', 'YT_VIDEO_URL',
                function($q,   $http,   ytVideoPrepare,   YT_VIDEO_URL) {
@@ -12,27 +49,6 @@ angular.module('ytCore', [])
       $http.jsonp(url).
         success(function(response) {
           defer.resolve(ytVideoPrepare(response.data));
-        }).
-        error(function() {
-          return 'failure';
-        });
-      return defer.promise;
-    };
-  }])
-
-  .factory('ytSearch', ['$q', '$http', 'ytVideoPrepare', 'YT_SEARCH_URL',
-                function($q,   $http,   ytVideoPrepare,   YT_SEARCH_URL) {
-
-    return function(q) {
-      var defer = $q.defer();
-      var url = YT_SEARCH_URL.replace('{Q}', q || '');
-      $http.jsonp(url).
-        success(function(response) {
-          var results = [];
-          angular.forEach(response.feed.entry, function(entry) {
-            results.push(ytVideoPrepare(entry));
-          });
-          defer.resolve(results);
         }).
         error(function() {
           return 'failure';
@@ -75,8 +91,9 @@ angular.module('ytCore', [])
     };
   }])
 
-  .factory('ytCreateEmbedURL', function() {
+  .factory('ytCreateEmbedURL', ['YT_EMBED_URL',
+                        function(YT_EMBED_URL) {
     return function(id) {
-      return 'http://www.youtube.com/embed/' + id + '?autoplay=1';
+      return YT_EMBED_URL.replace('{ID}', id);
     }
-  });
+  }]);

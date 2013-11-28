@@ -5,10 +5,10 @@ describe('myApp.listingPages', function() {
   describe('HomeCtrl', function() {
     it('should prepare the latest videos', function() {
       module(function($provide) {
-        $provide.factory('ytSearch', function($q) {
+        $provide.factory('ytVideos', function($q) {
           return function(q) {
             var defer = $q.defer();
-            defer.resolve([q || 'latest']);
+            defer.resolve({});
             return defer.promise;
           };
         });
@@ -20,7 +20,8 @@ describe('myApp.listingPages', function() {
         });
 
         $rootScope.$digest();
-        expect(scope.latestVideos).toEqual(['latest']);
+        expect(scope.latestVideos).toEqual({});
+        expect(scope.popularVideos).toEqual({});
       });
     });
   });
