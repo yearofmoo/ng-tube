@@ -1,0 +1,20 @@
+.fade-listing.ng-enter {
+  -webkit-transition:0.5s linear all;
+  transition:0.5s linear all;
+}
+
+.fade-listing.ng-enter-stagger {
+  -webkit-transition-delay:0.05s;
+  transition-delay:0.05s;
+
+  -webkit-transition-duration:0;
+  transition-duration:0;
+}
+
+.fade-listing.ng-enter {
+  opacity:0;
+}
+
+.fade-listing.ng-enter.ng-enter-active {
+  opacity:1;
+}

@@ -1,1 +1,1 @@
-angular.module('myApp', ['myApp.config','ngRoute','ytCore','myApp.listingPages'])
+angular.module('myApp', ['myApp.config','ngRoute','ngAnimate','ytCore','myApp.listingPages'])
