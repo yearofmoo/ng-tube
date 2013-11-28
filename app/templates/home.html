@@ -20,6 +20,10 @@
       </div>
     </div>
 
+    <form ng-submit="search(q)" ng-controller="SearchFormCtrl">
+      <input type="search" ng-model="q" />
+    </form>
+
     <section class="yr-panel">
       <header class="yr-panel-heading">
         <h5>Latest Videos</h5>

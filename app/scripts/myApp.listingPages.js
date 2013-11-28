@@ -26,4 +26,12 @@ angular.module('myApp.listingPages', ['ytCore','myApp.config'])
 
       $scope.categories = appCategories;
     });
+  }])
+
+  .controller('SearchFormCtrl', ['$scope', '$location',
+                         function($scope,   $location) {
+
+    $scope.search = function(q) {
+      $location.search({ q : q });
+    };
   }]);
