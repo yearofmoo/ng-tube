@@ -81,8 +81,8 @@ module.exports = function(grunt) {
       styles: {
         dest: './app/assets/app.css',
         src: [
+          'bower_components/bootstrap/dist/css/bootstrap.css',
           'app/styles/app.css',
-          //place your Stylesheet files here
         ]
       },
       scripts: {
@@ -94,9 +94,9 @@ module.exports = function(grunt) {
           'bower_components/angular/angular.js',
           'bower_components/angular-route/angular-route.js',
           'bower_components/angular-animate/angular-animate.js',
-          'app/scripts/homePages.js',
+          'app/scripts/myApp.listingPages.js',
+          'app/scripts/ytCore.js',
           'app/scripts/app.js',
-          //place your JavaScript files here
         ]
       },
     },

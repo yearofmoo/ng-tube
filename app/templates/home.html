@@ -1,1 +1,44 @@
-{{ welcome_message }}
+<div class="row">
+  <div class="col-md-9">
+    <div class="yr-carousel" yr-carousel="items">
+      <div class="yr-carousel-stage">
+      </div>
+      <div class="yr-carousel-list">
+        <ol>
+          <li ng-repeat="item in items">
+            Item
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <section class="yr-panel">
+      <header class="yr-panel-heading">
+        <h5>Latest Videos</h5>
+      </header>
+      <div class="yr-panel-content">
+        <div class="yr-videos-list">
+          <a href="/watch/{{ video.id }}" class="yr-videos-list-entry" ng-repeat="video in latestVideos">
+            <img ng-src="{{ video.image.url }}" />
+            <h5>{{ video.title }}</h5>
+            <p>{{ video.description }}</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="yr-panel">
+      <header class="yr-panel-heading">
+        <h5>Top Rated Videos</h5>
+      </header>
+      <div class="yr-panel-content">
+      </div>
+    </section>
+  </div>
+
+  <aside class="col-md-3">
+    <div ng-repeat="category in categories">
+      Category
+    </div>
+  </aside>
+</div>

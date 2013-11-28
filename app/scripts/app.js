@@ -1,4 +1,4 @@
-angular.module('myApp', ['ngRoute', 'app.homePages'])
+angular.module('myApp', ['ngRoute','ytCore','myApp.listingPages'])
 
   .constant('TPL_PATH', '/templates')
 
