@@ -1,6 +1,6 @@
-# Yearofmoo AngularJS Seed Repo
+# Yearofmoo AngularJS Youtuber Repo
 
-A starter AngularJS repository for getting started with AngularJS. Includes helpful unit testing tools, Protractor integration and coverage testing.
+A sleek AngularJS Application to browse youtube videos
 
 ## Installation
 
