@@ -7,6 +7,17 @@ angular.module('myApp.listingPages', ['ytCore','myApp.config'])
       controller : 'HomeCtrl',
       templateUrl : TPL_PATH + '/home.html',
       reloadOnSearch : false
+    }).when('/watch/:id',{
+      controller : 'WatchCtrl',
+      templateUrl : TPL_PATH + '/watch.html',
+      resolve: {
+        videoInstance: ['ytVideo', '$location', function(ytVideo, $location) {
+          //match the ID with a regex instead of using route params
+          //since the route has not fully changed yet
+          var id = $location.path().match(/watch\/([^ \/]+)(\/|$)/)[1];
+          return ytVideo(id);
+        }]
+      }
     });
   })
 
@@ -34,4 +45,10 @@ angular.module('myApp.listingPages', ['ytCore','myApp.config'])
     $scope.search = function(q) {
       $location.search({ q : q });
     };
-  }]);
+  }])
+
+  .controller('WatchCtrl', ['$scope', '$location',  'videoInstance',
+                    function($scope,   $location,    videoInstance) {
+
+    $scope.video_id = videoInstance.id;
+  }])

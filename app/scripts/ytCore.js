@@ -5,6 +5,10 @@ angular.module('ytCore', [])
   .constant('YT_POPULAR_URL', 'https://gdata.youtube.com/feeds/api/standardfeeds/{FEED}?alt=json&callback=JSON_CALLBACK')
   .constant('YT_EMBED_URL',   'http://www.youtube.com/embed/{ID}?autoplay=1')
 
+  .config(['$sceDelegateProvider', function($sceDelegateProvider) {
+    $sceDelegateProvider.resourceUrlWhitelist(['self', 'http://www.youtube.com/**']);
+  }])
+
   .factory('ytFeed', ['ytVideos', 'YT_POPULAR_URL',
               function(ytVideos,   YT_POPULAR_URL) {
     return function(feed) {
@@ -48,7 +52,7 @@ angular.module('ytCore', [])
       var url = YT_VIDEO_URL.replace('{ID}', id);
       $http.jsonp(url).
         success(function(response) {
-          defer.resolve(ytVideoPrepare(response.data));
+          defer.resolve(ytVideoPrepare(response.entry));
         }).
         error(function() {
           return 'failure';
@@ -95,5 +99,25 @@ angular.module('ytCore', [])
                         function(YT_EMBED_URL) {
     return function(id) {
       return YT_EMBED_URL.replace('{ID}', id);
+    }
+  }])
+
+  .directive('ytVideoPlayer', ['ytCreateEmbedURL',
+                       function(ytCreateEmbedURL) {
+    return {
+      controller: ['$scope', function($scope) {
+        $scope.videoStyles = {
+          width: (parseInt($scope.width) || 560) + 'px;',
+          height: (parseInt($scope.height) || 315) + 'px;'
+        };
+        $scope.video_src = ytCreateEmbedURL($scope.video_id);
+      }],
+      scope: {
+        video_id: '@ytVideoPlayer',
+        width: '@width',
+        height: '@height'
+      },
+      template: '<iframe ng-src="{{ video_src }}" width="560" height="315"></iframe>',
+      replace: true
     }
   }]);

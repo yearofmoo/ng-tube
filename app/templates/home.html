@@ -1,5 +1,5 @@
 <script type="text/ng-template" id="video-entry">
-<a href="http://www.youtube.com/watch?v={{ video.id }}">
+<a href="#/watch/{{ video.id }}">
   <img ng-src="{{ video.image.url }}" />
   <h5>{{ video.title }}</h5>
   <p>{{ video.description }}</p>
@@ -29,8 +29,8 @@
         <h5>Latest Videos</h5>
       </header>
       <div class="yr-panel-content">
-        <div class="yr-videos-list">
-          <div ng-include="'video-entry'" ng-repeat="video in latestVideos" class="yr-videos-list-entry fade-listing">
+        <div class="yr-videos-list row">
+          <div ng-include="'video-entry'" ng-repeat="video in latestVideos" class="yr-videos-list-entry col-xs-4 fade-listing">
         </div>
       </div>
     </section>
@@ -40,8 +40,8 @@
         <h5>Popular Videos</h5>
       </header>
       <div class="yr-panel-content">
-        <div class="yr-videos-list">
-          <div ng-include="'video-entry'" ng-repeat="video in popularVideos" class="yr-videos-list-entry">
+        <div class="yr-videos-list row">
+          <div ng-include="'video-entry'" ng-repeat="video in popularVideos" class="yr-videos-list-entry col-xs-4 fade-listing">
         </div>
       </div>
     </section>
