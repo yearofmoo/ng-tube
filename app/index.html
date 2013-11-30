@@ -7,9 +7,28 @@
 
   <body>
     <div id="wrapper">
-      <header>Header</header>
+      <header class="yr-header">
+        <nav class="yr-header-nav">
+          <ol>
+            <li class="yr-header-nav-item">
+              <a href="#">Home</a>
+            </li>
+          </ol>
+        </nav> 
+      </header>
       <main id="view-container">
-        <div ng-view></div>
+        <div class="row">
+          <div class="col-md-9">
+            <div ng-view></div>
+          </div>
+          <aside class="yr-side-navigation yr-categories-list">
+            <form ng-submit="search(q)" ng-controller="SearchFormCtrl" class="yr-search-header">
+              <span class="fa fa-search yr-search-icon"></span>
+              <input type="search" ng-model="q" class="yr-search-input" />
+            </form>
+            <div ng-include="getColumnTemplate()"></div>
+          </aside>
+        </div>
       </main>
       <footer>Footer</footer>
     </div>

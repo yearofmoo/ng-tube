@@ -1,6 +1,7 @@
 angular.module('ytCore', [])
 
   .constant('YT_VIDEO_URL',   'https://gdata.youtube.com/feeds/api/videos/{ID}?v=2&alt=json&callback=JSON_CALLBACK')
+  .constant('YT_VIDEO_COMMENTS_URL',   'https://gdata.youtube.com/feeds/api/videos/{ID}/comments?v=2&alt=json&callback=JSON_CALLBACK')
   .constant('YT_SEARCH_URL',  'https://gdata.youtube.com/feeds/api/videos/?q={Q}&v=2&alt=json&callback=JSON_CALLBACK')
   .constant('YT_POPULAR_URL', 'https://gdata.youtube.com/feeds/api/standardfeeds/{FEED}?alt=json&callback=JSON_CALLBACK')
   .constant('YT_EMBED_URL',   'http://www.youtube.com/embed/{ID}?autoplay=1')
@@ -29,15 +30,15 @@ angular.module('ytCore', [])
                 function($q,   $http,   ytVideoPrepare) {
     return function(url) {
       var defer = $q.defer();
-      $http.jsonp(url).
-        success(function(response) {
+      $http.jsonp(url)
+        .success(function(response) {
           var results = [];
           angular.forEach(response.feed.entry, function(entry) {
             results.push(ytVideoPrepare(entry));
           });
           defer.resolve(results);
-        }).
-        error(function() {
+        })
+        .error(function() {
           return 'failure';
         });
       return defer.promise;
@@ -50,11 +51,11 @@ angular.module('ytCore', [])
     return function(id) {
       var defer = $q.defer();
       var url = YT_VIDEO_URL.replace('{ID}', id);
-      $http.jsonp(url).
-        success(function(response) {
+      $http.jsonp(url)
+        .success(function(response) {
           defer.resolve(ytVideoPrepare(response.entry));
-        }).
-        error(function() {
+        })
+        .error(function() {
           return 'failure';
         });
       return defer.promise;
@@ -95,6 +96,28 @@ angular.module('ytCore', [])
     };
   }])
 
+  .factory('ytVideoComments', ['$http', '$q', 'YT_VIDEO_COMMENTS_URL',
+                       function($http,   $q,   YT_VIDEO_COMMENTS_URL) {
+    return function(id) {
+      var url = YT_VIDEO_COMMENTS_URL.replace('{ID}', id);
+      var defer = $q.defer();
+      $http.jsonp(url)
+        .success(function(response) {
+          var comments = [];
+          angular.forEach(response.feed.entry, function(comment) {
+            comments.push({
+              content : comment.content.$t
+            });
+          });
+          defer.resolve(comments);
+        })
+        .error(function() {
+          defer.reject();
+        });
+      return defer.promise;
+    };
+  }])
+
   .factory('ytCreateEmbedURL', ['YT_EMBED_URL',
                         function(YT_EMBED_URL) {
     return function(id) {
@@ -106,10 +129,8 @@ angular.module('ytCore', [])
                        function(ytCreateEmbedURL) {
     return {
       controller: ['$scope', function($scope) {
-        $scope.videoStyles = {
-          width: (parseInt($scope.width) || 560) + 'px;',
-          height: (parseInt($scope.height) || 315) + 'px;'
-        };
+        $scope.width  = parseInt($scope.width) || 560;
+        $scope.height = parseInt($scope.height) || 315;
         $scope.video_src = ytCreateEmbedURL($scope.video_id);
       }],
       scope: {
@@ -117,7 +138,8 @@ angular.module('ytCore', [])
         width: '@width',
         height: '@height'
       },
-      template: '<iframe ng-src="{{ video_src }}" width="560" height="315"></iframe>',
+      template: '<iframe ng-src="{{ video_src }}" ' +
+                        'class="yt-video-player"></iframe>',
       replace: true
     }
   }]);

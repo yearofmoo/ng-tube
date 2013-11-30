@@ -1,6 +1,9 @@
 angular.module('myApp.listingPages', ['ytCore','myApp.config'])
 
-  .value('appCategories', ['funny','programming', 'web development'])
+  .value('appCategories', [
+    'funny','programming', 'web development',
+    'music', 'video games'
+  ])
 
   .config(function($routeProvider, TPL_PATH) {
     $routeProvider.when('/',{
@@ -21,8 +24,28 @@ angular.module('myApp.listingPages', ['ytCore','myApp.config'])
     });
   })
 
-  .controller('HomeCtrl', ['$scope', '$location', 'ytSearch', 'ytFeed', 'appCategories',
-                   function($scope,   $location,   ytSearch,   ytFeed,   appCategories) {
+  .run(['$rootScope', 'TPL_PATH', function($rootScope, TPL_PATH) {
+    var template;
+    $rootScope.setColumnTemplate = function(tpl) {
+      template = TPL_PATH + tpl;
+    };
+    $rootScope.getColumnTemplate = function() {
+      return template;
+    };
+
+    var video;
+    $rootScope.setCurrentVideo = function(v) {
+      video = v;
+    };
+    $rootScope.getCurrentVideo = function() {
+      return video;
+    };
+  }])
+
+  .controller('HomeCtrl', ['$scope', '$location', 'ytSearch', 'ytFeed',
+                   function($scope,   $location,   ytSearch,   ytFeed) {
+
+    $scope.setColumnTemplate('/categories.html');
 
     $scope.$watch(function() {
       return $location.search().category || $location.search().q;
@@ -34,21 +57,51 @@ angular.module('myApp.listingPages', ['ytCore','myApp.config'])
       ytFeed('most_popular').then(function(videos) {
         $scope.popularVideos = videos;
       });
-
-      $scope.categories = appCategories;
     });
+  }])
+
+  .filter('limit', function() {
+    return function(results, limit) {
+      return results && results.slice(0, limit);
+    }
+  })
+
+  .controller('CategoryListCtrl', ['$scope', 'appCategories',
+                           function($scope,   appCategories) {
+    $scope.categories = appCategories;
+    //var categoryMatch = appCategories.indexOf(q);
+    //$scope.currentCategory = categoryMatch >= 0 ? appCategories[categoryMatch] : null;
   }])
 
   .controller('SearchFormCtrl', ['$scope', '$location',
                          function($scope,   $location) {
 
     $scope.search = function(q) {
-      $location.search({ q : q });
+      $location
+        .path('/')
+        .search({ q : q });
     };
   }])
 
-  .controller('WatchCtrl', ['$scope', '$location',  'videoInstance',
-                    function($scope,   $location,    videoInstance) {
+  .controller('WatchCtrl', ['$scope', '$location',  'videoInstance', 'ytVideoComments',
+                    function($scope,   $location,    videoInstance,   ytVideoComments) {
 
     $scope.video_id = videoInstance.id;
+
+    ytVideoComments(videoInstance.id).then(function(comments) {
+      $scope.video_comments = comments;
+    });
+
+    $scope.setColumnTemplate('/video-panel.html');
+    $scope.setCurrentVideo(videoInstance);
+
+    $scope.$on('$destroy', function() {
+      $scope.setCurrentVideo(null);
+    });
   }])
+
+  .controller('VideoPanelCtrl', ['$scope',
+                         function($scope) {
+
+    $scope.video = $scope.getCurrentVideo();
+  }]);

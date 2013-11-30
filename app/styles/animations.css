@@ -1,6 +1,11 @@
 .fade-listing.ng-enter {
-  -webkit-transition:0.5s linear all;
-  transition:0.5s linear all;
+  -webkit-transition:0.2s linear all;
+  transition:0.2s linear all;
+}
+
+.fade-listing.ng-leave {
+  -webkit-transition:0s none;
+  transition:0s none;
 }
 
 .fade-listing.ng-enter-stagger {
@@ -13,8 +18,12 @@
 
 .fade-listing.ng-enter {
   opacity:0;
+  -webkit-transform:scale(1.15);
+  transform:scale(1.15);
 }
 
 .fade-listing.ng-enter.ng-enter-active {
   opacity:1;
+  -webkit-transform:scale(1);
+  transform:scale(1);
 }

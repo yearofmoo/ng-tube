@@ -1,17 +1,13 @@
-<div class="row">
-    <section class="yr-panel">
-      <header class="yr-panel-heading">
-        <h5>Latest Videos</h5>
-      </header>
-      <div class="yr-panel-content">
-        <div yt-video-player="{{ video_id }}"></div>
+<section class="yr-panel">
+  <div class="yr-panel-content">
+    <div yt-video-player="{{ video_id }}"></div>
+    <div class="yr-video-comments">
+      <div class="yr-video-comments-header">
+        <input type="search" ng-model="q" />
       </div>
-    </section>
-  </div>
-
-  <aside class="col-md-2">
-    <div ng-repeat="category in categories">
-      <a ng-href="#/?category={{ category }}">Category - {{ category }}</a>
+      <div ng-repeat="comment in video_comments | filter:q" class="yr-video-comment">
+        {{ comment.content }}
+      </div>
     </div>
-  </aside>
-</div>
+  </div>
+</section>

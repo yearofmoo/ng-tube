@@ -19,6 +19,9 @@ module.exports = function(grunt) {
       },
       npm_install: {
         command: 'npm install'
+      },
+      font_awesome_fonts: {
+        command: 'cp -R bower_components/font-awesome/fonts/* app/fonts/'
       }
     },
 
@@ -82,8 +85,10 @@ module.exports = function(grunt) {
         dest: './app/assets/app.css',
         src: [
           'bower_components/bootstrap/dist/css/bootstrap.css',
-          'app/styles/animations.css',
+          'bower_components/font-awesome/css/font-awesome.css',
+          'app/styles/yt.css',
           'app/styles/app.css',
+          'app/styles/animations.css'
         ]
       },
       scripts: {
@@ -169,7 +174,7 @@ module.exports = function(grunt) {
 
   //installation-related
   grunt.registerTask('install', ['update','shell:protractor_install']);
-  grunt.registerTask('update', ['shell:npm_install', 'concat']);
+  grunt.registerTask('update', ['shell:npm_install', 'shell:font_awesome_fonts', 'concat']);
 
   //defaults
   grunt.registerTask('default', ['dev']);

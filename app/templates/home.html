@@ -1,55 +1,18 @@
 <script type="text/ng-template" id="video-entry">
-<a href="#/watch/{{ video.id }}">
+<a href="#/watch/{{ video.id }}" class="yr-video-entry-link">
   <img ng-src="{{ video.image.url }}" />
   <h5>{{ video.title }}</h5>
   <p>{{ video.description }}</p>
 </a>
 </script>
 
-<div class="row">
-  <div class="col-md-10">
-    <div class="yr-carousel" yr-carousel="items">
-      <div class="yr-carousel-stage">
-      </div>
-      <div class="yr-carousel-list">
-        <ol>
-          <li ng-repeat="item in items">
-            Item
-          </li>
-        </ol>
-      </div>
+<section class="yr-panel">
+  <header class="yr-panel-heading">
+    <h5>Latest Videos</h5>
+  </header>
+  <div class="yr-panel-content">
+    <div class="yr-videos-list row yr-grid">
+      <div ng-include="'video-entry'" ng-repeat="video in latestVideos | limit:24" class="yr-videos-list-entry col col-xs-4 fade-listing">
     </div>
-
-    <form ng-submit="search(q)" ng-controller="SearchFormCtrl">
-      <input type="search" ng-model="q" />
-    </form>
-
-    <section class="yr-panel">
-      <header class="yr-panel-heading">
-        <h5>Latest Videos</h5>
-      </header>
-      <div class="yr-panel-content">
-        <div class="yr-videos-list row">
-          <div ng-include="'video-entry'" ng-repeat="video in latestVideos" class="yr-videos-list-entry col-xs-4 fade-listing">
-        </div>
-      </div>
-    </section>
-
-    <section class="yr-panel">
-      <header class="yr-panel-heading">
-        <h5>Popular Videos</h5>
-      </header>
-      <div class="yr-panel-content">
-        <div class="yr-videos-list row">
-          <div ng-include="'video-entry'" ng-repeat="video in popularVideos" class="yr-videos-list-entry col-xs-4 fade-listing">
-        </div>
-      </div>
-    </section>
   </div>
-
-  <aside class="col-md-2">
-    <div ng-repeat="category in categories">
-      <a ng-href="#/?category={{ category }}">Category - {{ category }}</a>
-    </div>
-  </aside>
-</div>
+</section>
