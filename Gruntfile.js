@@ -15,13 +15,10 @@ module.exports = function(grunt) {
         }
       },
       protractor_install: {
-        command: 'node ./node_modules/protractor/bin/install_selenium_standalone'
+        command: 'node ./node_modules/protractor/bin/webdriver-manager update'
       },
       npm_install: {
         command: 'npm install'
-      },
-      font_awesome_fonts: {
-        command: 'cp -R bower_components/font-awesome/fonts/* app/fonts/'
       }
     },
 
@@ -174,7 +171,7 @@ module.exports = function(grunt) {
 
   //installation-related
   grunt.registerTask('install', ['update','shell:protractor_install']);
-  grunt.registerTask('update', ['shell:npm_install', 'shell:font_awesome_fonts', 'concat']);
+  grunt.registerTask('update', ['shell:npm_install', 'concat']);
 
   //defaults
   grunt.registerTask('default', ['dev']);

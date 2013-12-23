@@ -1,11 +1,12 @@
 {
-  "name": "StrangeLoop-AngularJS",
+  "name": "youtuber-app",
+  "version": "0.0.1",
   "dependencies": {
-    "jquery": "~2.0.3",
-    "angular": "1.2.1",
-    "angular-route": "1.2.1",
-    "angular-animate": "1.2.1",
-    "angular-mocks": "1.2.1",
+    "jquery": "latest",
+    "angular": "1.2.6",
+    "angular-route": "1.2.6",
+    "angular-animate": "1.2.6",
+    "angular-mocks": "1.2.6",
     "bootstrap": "~3.0.2",
     "font-awesome": "~4.0.3"
   }
