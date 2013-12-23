@@ -8,7 +8,10 @@
 
 <section class="yr-panel">
   <header class="yr-panel-heading">
-    <h5>Latest Videos</h5>
+    <h5>
+      <span ng-if="searchTerm">Videos matching <strong>{{ searchTerm }}</strong></span>
+      <span ng-if="!searchTerm">Latest Videos</span>
+    </h5>
   </header>
   <div class="yr-panel-content">
     <div class="yr-videos-list row yr-grid">

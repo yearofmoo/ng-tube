@@ -1,3 +1,7 @@
+#view-container {
+  padding-top:50px;
+}
+
 .yr-videos-list-entry {
   height:200px;
   overflow:hidden;
@@ -36,9 +40,8 @@
 }
 
 .yr-side-navigation {
-  z-index:1000;
   position:fixed;
-  top:0;
+  top:50px;
   bottom:0;
   width:25%;
   right:0;
@@ -62,15 +65,14 @@
   box-shadow:inset 0 0 10px #aaa;
 }
 
-.yr-header,
-.yr-search-header {
-  background:black;
-  padding:10px 10px 0;
-  height:50px;
-}
-
-.yr-search-header {
-  background:#222;
+.yr-header {
+  background:#333;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:1000;
+  overflow:hidden;
 }
 
 .yr-header-nav-item {
@@ -83,20 +85,30 @@
   border-bottom:1px solid #ddd;
 }
 
-.yr-search-icon {
+.yr-nav-icon {
   float:left;
-  margin:5px 10px 0 5px;
+  line-height:50px;
+  width:50px;
+  text-align:center;
 }
 
-.yr-search-icon,
+.yr-nav-icon {
+  background:#222;
+}
+
+.yr-search-icon {
+  background:#ac0809;
+}
+
+.yr-nav-icon,
 .yr-search-input {
   color:white;
   font-size:20px;
 }
 
 .yr-search-input {
-  padding:0;
-  background:none;
+  padding:10px;
+  background:#333;
   border:0;
   width:80%;
 }
@@ -113,4 +125,18 @@
 
 .yr-video-panel-inner {
   padding:10px;
+}
+
+.yr-advanced-search-link,
+.yr-advanced-search-link:hover {
+  color:white;
+}
+
+.yr-advanced-search-header {
+  border-top:1px solid black;
+  padding:20px;
+  color:white;
+  background:#111;
+  clear:both;
+  overflow:auto;
 }

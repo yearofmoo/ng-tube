@@ -1,20 +1,39 @@
 <!DOCTYPE html> 
 <html data-ng-app="myApp">
   <head>
-    <title>Yearofmoo AngularJS Seed Repo</title>
+    <title>ng-tube</title>
     <link rel="stylesheet" type="text/css" href="./assets/app.css" />
   </head>
 
   <body>
     <div id="wrapper">
       <header class="yr-header">
-        <nav class="yr-header-nav">
-          <ol>
-            <li class="yr-header-nav-item">
-              <a href="#">Home</a>
-            </li>
-          </ol>
-        </nav> 
+        <form ng-submit="search()" ng-controller="SearchFormCtrl" class="yr-search-header">
+          <section>
+            <a href="#/" class="fa fa-home yr-nav-icon"></a>
+            <span class="fa fa-search yr-nav-icon yr-search-icon" ng-click="search()"></span>
+            <input type="search" ng-model="q" class="yr-search-input" placeholder="Search youtube..." />
+            <a href="" class="yr-advanced-search-link" ng-click="advanced = advanced ? null : {}">
+              <span class="fa fa-cog"></span>
+              Advanced Search
+            </a>
+          </section>
+          <section ng-if="advanced" class="yr-advanced-search-header row">
+            <datalist id="categories" ng-controller="CategoryListCtrl">
+              <option value="{{ category }}" ng-repeat="category in categories" />
+            </datalist>
+            <div class="col-md-4">
+              <input type="text" ng-model="advanced.category" placeholder="Youtube Category" class="form-control" list="categories" />
+            </div>
+            <div class="col-md-4">
+              <select class="form-control" ng-model="advanced.orderby" ng-options="option as option for option in orderingOptions" placeholder="Sorting Options...">
+              </select>
+            </div>
+            <button class="btn btn-default col-md-2">
+              <span class="fa fa-search"></span> Submit Search
+            </button>
+          </section>
+        </form>
       </header>
       <main id="view-container">
         <div class="row">
@@ -22,10 +41,6 @@
             <div ng-view></div>
           </div>
           <aside class="yr-side-navigation yr-categories-list">
-            <form ng-submit="search(q)" ng-controller="SearchFormCtrl" class="yr-search-header">
-              <span class="fa fa-search yr-search-icon"></span>
-              <input type="search" ng-model="q" class="yr-search-input" />
-            </form>
             <div ng-include="getColumnTemplate()"></div>
           </aside>
         </div>

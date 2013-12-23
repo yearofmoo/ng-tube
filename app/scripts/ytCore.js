@@ -1,8 +1,9 @@
 angular.module('ytCore', [])
 
-  .constant('YT_VIDEO_URL',   'https://gdata.youtube.com/feeds/api/videos/{ID}?v=2&alt=json&callback=JSON_CALLBACK')
+  .constant('YT_VIDEO_URL', 'https://gdata.youtube.com/feeds/api/videos/{ID}?v=2&alt=json&callback=JSON_CALLBACK')
   .constant('YT_VIDEO_COMMENTS_URL',   'https://gdata.youtube.com/feeds/api/videos/{ID}/comments?v=2&alt=json&callback=JSON_CALLBACK')
-  .constant('YT_SEARCH_URL',  'https://gdata.youtube.com/feeds/api/videos/?q={Q}&v=2&alt=json&callback=JSON_CALLBACK')
+  .constant('YT_SEARCH_URL', 'https://gdata.youtube.com/feeds/api/videos/?v=2&alt=json&callback=JSON_CALLBACK')
+
   .constant('YT_POPULAR_URL', 'https://gdata.youtube.com/feeds/api/standardfeeds/{FEED}?alt=json&callback=JSON_CALLBACK')
   .constant('YT_EMBED_URL',   'http://www.youtube.com/embed/{ID}?autoplay=1')
 
@@ -18,10 +19,34 @@ angular.module('ytCore', [])
     }
   }])
 
-  .factory('ytSearch', ['ytVideos', 'YT_SEARCH_URL',
-                function(ytVideos,   YT_SEARCH_URL) {
-    return function(q) {
-      var url = YT_SEARCH_URL.replace('{Q}', q || '');
+  .value('ytSearchParams', function(baseUrl, params) {
+    var attrs = '';
+    angular.forEach(params, function(value, key) {
+      if(!value || value.length==0) return;
+      var attr;
+      switch(key) {
+        case 'q':
+          attr = 'q';
+        break;
+        case 'c':
+          attr = 'category';
+        break;
+        case 'o':
+          attr = 'orderby';
+        break;
+        default:
+          return;
+      }
+      attrs += (baseUrl.indexOf('?') == -1 ? '?' : '&') + attr + '=' + value;
+    });
+    return baseUrl + attrs;
+  })
+
+  .factory('ytSearch', ['ytVideos', 'ytSearchParams', 'YT_SEARCH_URL',
+                function(ytVideos,   ytSearchParams,   YT_SEARCH_URL) {
+    return function(data) {
+      data = typeof data == 'string' ? { q : data } : data;
+      var url = ytSearchParams(YT_SEARCH_URL, data);
       return ytVideos(url);
     }
   }])

@@ -47,10 +47,13 @@ angular.module('myApp.listingPages', ['ytCore','myApp.config'])
 
     $scope.setColumnTemplate('/categories.html');
 
-    $scope.$watch(function() {
-      return $location.search().category || $location.search().q;
-    }, function(q) {
-      ytSearch(q).then(function(videos) {
+    $scope.$watchCollection(function() {
+      return $location.search();
+    }, function(data) {
+      var q = data.q;
+      $scope.searchTerm = q && q.length > 0 && q;
+
+      ytSearch(data).then(function(videos) {
         $scope.latestVideos = videos;
       });
 
@@ -76,11 +79,31 @@ angular.module('myApp.listingPages', ['ytCore','myApp.config'])
   .controller('SearchFormCtrl', ['$scope', '$location',
                          function($scope,   $location) {
 
-    $scope.search = function(q) {
-      $location
-        .path('/')
-        .search({ q : q });
+    $scope.search = function() {
+      var order, category, q = $scope.q;
+      if($scope.advanced) {
+        order = $scope.advanced.orderby;
+        category = $scope.advanced.category;
+      }
+      $location.search({
+                 q : q || '',
+                 c : category || '',
+                 o : order || ''
+               }).path('/')
     };
+
+    $scope.orderingOptions = [
+      'relevance',
+      'published',
+      'viewCount',
+      'rating',
+      'position',
+      'commentCount',
+      'published',
+      'reversedPosition',
+      'title',
+      'viewCount'
+    ];
   }])
 
   .controller('WatchCtrl', ['$scope', '$location',  'videoInstance', 'ytVideoComments',
