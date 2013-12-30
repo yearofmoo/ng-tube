@@ -1,3 +1,5 @@
+var BASE_TEN = 10;
+
 angular.module('ytCore', [])
 
   .constant('YT_VIDEO_URL', 'https://gdata.youtube.com/feeds/api/videos/{ID}?v=2&alt=json&callback=JSON_CALLBACK')
@@ -16,28 +18,34 @@ angular.module('ytCore', [])
     return function(feed) {
       var url = YT_POPULAR_URL.replace('{FEED}', feed);
       return ytVideos(url);
-    }
+    };
   }])
 
   .value('ytSearchParams', function(baseUrl, params) {
     var attrs = '';
     angular.forEach(params, function(value, key) {
-      if(!value || value.length==0) return;
+      if(!value || value.length === 0) {
+        return;
+      }
+
       var attr;
       switch(key) {
-        case 'q':
-          attr = 'q';
+      case 'q':
+        attr = 'q';
         break;
-        case 'c':
-          attr = 'category';
+
+      case 'c':
+        attr = 'category';
         break;
-        case 'o':
-          attr = 'orderby';
+
+      case 'o':
+        attr = 'orderby';
         break;
-        default:
-          return;
+
+      default:
+        return;
       }
-      attrs += (baseUrl.indexOf('?') == -1 ? '?' : '&') + attr + '=' + value;
+      attrs += (baseUrl.indexOf('?') === -1 ? '?' : '&') + attr + '=' + value;
     });
     return baseUrl + attrs;
   })
@@ -45,10 +53,13 @@ angular.module('ytCore', [])
   .factory('ytSearch', ['ytVideos', 'ytSearchParams', 'YT_SEARCH_URL',
                 function(ytVideos,   ytSearchParams,   YT_SEARCH_URL) {
     return function(data) {
-      data = typeof data == 'string' ? { q : data } : data;
+      data = typeof data === 'string' ?
+        { q : data } :
+        data;
+
       var url = ytSearchParams(YT_SEARCH_URL, data);
       return ytVideos(url);
-    }
+    };
   }])
 
   .factory('ytVideos', ['$q', '$http', 'ytVideoPrepare',
@@ -101,8 +112,8 @@ angular.module('ytCore', [])
           height : thumb.height,
           url : thumb.url,
           name : thumb.yt$name
-        }
-        if(image.name == 'hqdefault') {
+        };
+        if(image.name === 'hqdefault') {
           hqVideo = hqVideo || image;
         }
         thumbnails.push(image);
@@ -114,7 +125,7 @@ angular.module('ytCore', [])
         thumbnails : thumbnails,
         title : entry.title.$t,
         description : $media.media$description.$t,
-        rating : entry.gd$rating ? parseInt(entry.gd$rating.average) : 0,
+        rating : entry.gd$rating ? parseInt(entry.gd$rating.average, BASE_TEN) : 0,
         keywords : $media.media$keywords || '',
         embedUrl : ytCreateEmbedURL(id)
       };
@@ -147,15 +158,15 @@ angular.module('ytCore', [])
                         function(YT_EMBED_URL) {
     return function(id) {
       return YT_EMBED_URL.replace('{ID}', id);
-    }
+    };
   }])
 
   .directive('ytVideoPlayer', ['ytCreateEmbedURL',
                        function(ytCreateEmbedURL) {
     return {
       controller: ['$scope', function($scope) {
-        $scope.width  = parseInt($scope.width) || 560;
-        $scope.height = parseInt($scope.height) || 315;
+        $scope.width = parseInt($scope.width, BASE_TEN) || 560;
+        $scope.height = parseInt($scope.height, BASE_TEN) || 315;
         $scope.video_src = ytCreateEmbedURL($scope.video_id);
       }],
       scope: {
@@ -166,5 +177,5 @@ angular.module('ytCore', [])
       template: '<iframe ng-src="{{ video_src }}" ' +
                         'class="yt-video-player"></iframe>',
       replace: true
-    }
+    };
   }]);

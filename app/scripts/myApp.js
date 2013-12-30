@@ -6,10 +6,8 @@ angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
     return function() {
       var val;
       return function(data) {
-        return arguments.length
-          ? (val = data)
-          : val;
-      }
+        return arguments.length ? (val = data) : val;
+      };
     };
   })
 
@@ -74,7 +72,7 @@ angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
   .filter('limit', function() {
     return function(results, limit) {
       return results && results.slice(0, limit);
-    }
+    };
   })
 
   .controller('CategoryListCtrl', ['$scope', 'appCategories',
@@ -93,11 +91,12 @@ angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
         order = $scope.advanced.orderby;
         category = $scope.advanced.category;
       }
+
       $location.search({
-                 q : q || '',
-                 c : category || '',
-                 o : order || ''
-               }).path('/')
+        q : q || '',
+        c : category || '',
+        o : order || ''
+      }).path('/');
     };
 
     $scope.orderingOptions = [
@@ -114,7 +113,7 @@ angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
     ];
   }])
 
-  .controller('WatchCtrl', ['$scope', '$location',  'videoInstance', 'ytVideoComments', 'TPL_PATH', 'currentVideo', 'columnTemplate', 
+  .controller('WatchCtrl', ['$scope', '$location',  'videoInstance', 'ytVideoComments', 'TPL_PATH', 'currentVideo', 'columnTemplate',
                     function($scope,   $location,    videoInstance,   ytVideoComments,   TPL_PATH,   currentVideo,   columnTemplate) {
 
     $scope.video_id = videoInstance.id;
