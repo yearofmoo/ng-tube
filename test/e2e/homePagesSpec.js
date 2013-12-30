@@ -4,7 +4,7 @@ describe('Home Pages', function() {
 
   it('should load the homepage', function() {
     ptor.get('/#');
-    expect(ptor.findElement(protractor.By.id('view-container')).getText()).toBe('Welcome Home...');
+    expect(ptor.findElement(protractor.By.id('view-container')).getText()).toContain('Latest Videos');
   });
 
 });
