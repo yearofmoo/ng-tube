@@ -1,4 +1,4 @@
-# Yearofmoo AngularJS Youtuber Repo
+# O'Reilly - AngularJS Inside-out
 
 A sleek AngularJS Application to browse youtube videos
 
