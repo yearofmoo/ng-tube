@@ -1,6 +1,6 @@
-describe('myApp.listingPages', function() {
+describe('myApp', function() {
 
-  beforeEach(module('myApp.listingPages'));
+  beforeEach(module('myApp'));
 
   describe('HomeCtrl', function() {
     it('should prepare the latest videos', function() {

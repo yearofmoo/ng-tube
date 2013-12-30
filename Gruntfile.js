@@ -97,10 +97,8 @@ module.exports = function(grunt) {
           'bower_components/angular/angular.js',
           'bower_components/angular-route/angular-route.js',
           'bower_components/angular-animate/angular-animate.js',
-          'app/scripts/myApp.config.js',
-          'app/scripts/myApp.listingPages.js',
           'app/scripts/ytCore.js',
-          'app/scripts/app.js',
+          'app/scripts/myApp.js'
         ]
       },
     },

@@ -1,4 +1,6 @@
-angular.module('myApp.listingPages', ['ytCore','myApp.config'])
+angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
+
+  .constant('TPL_PATH', '/templates')
 
   .factory('getSet', function() {
     return function() {
