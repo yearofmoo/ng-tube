@@ -13,7 +13,7 @@ describe('ytCore', function() {
         $httpBackend.expect('JSONP',
           'https://gdata.youtube.com/feeds/api/videos/' + 
             'my-id?v=2&alt=json&callback=JSON_CALLBACK')
-          .respond(200, { data : ["raw"] });
+          .respond(200, { entry : ["raw"] });
 
         ytVideo('my-id').then(function(response) {
           expect(response).toEqual(["raw"]);
@@ -25,24 +25,44 @@ describe('ytCore', function() {
   });
 
   describe('ytSearch', function() {
-    it('should properly perform a JSONP search on all youtube videos', function() {
-      module(function($provide) {
-        $provide.value('ytVideoPrepare', function(rawValue) {
-          return '_' + rawValue + '_';
-        });
-      })
-      inject(function(ytSearch, $httpBackend, $rootScope) {
-        $httpBackend.expect('JSONP',
-          'https://gdata.youtube.com/feeds/api/videos/?q=cars&v=2&alt=json&callback=JSON_CALLBACK')
-          .respond(200, { feed: { entry: ["one","two"] } });
-
-        ytSearch('cars').then(function(results) {
-          expect(results).toEqual(["_one_","_two_"]);
-        });
-        $rootScope.$digest();
-        $httpBackend.flush();
+    beforeEach(module(function($provide) {
+      $provide.value('ytVideoPrepare', function(rawValue) {
+        return '_' + rawValue + '_';
       });
-    });
+    }));
+
+    it('should properly perform a JSONP search on all youtube videos',
+      inject(function(ytSearch, $httpBackend, $rootScope) {
+
+      $httpBackend.expect('JSONP',
+        'https://gdata.youtube.com/feeds/api/videos/?v=2&alt=json&callback=JSON_CALLBACK&q=cars')
+        .respond(200, { feed: { entry: ["one","two"] } });
+
+      ytSearch('cars').then(function(results) {
+        expect(results).toEqual(["_one_","_two_"]);
+      });
+
+      $rootScope.$digest();
+      $httpBackend.flush();
+    }));
+
+    it('should search the categories, set the sorting and perform a query search when an object is provided to ytSearch',
+      inject(function(ytSearch, $httpBackend, $rootScope) {
+
+      $httpBackend.expect('JSONP',
+        'https://gdata.youtube.com/feeds/api/videos/?v=2&alt=json&callback=JSON_CALLBACK' +
+        '&q=cars&category=funny&orderby=duration'
+      ).respond(200, { feed: { entry: ["one","two"] } });
+
+      ytSearch({
+        q : 'cars',
+        c : 'funny',
+        o : 'duration' 
+      });
+
+      $rootScope.$digest();
+      $httpBackend.flush();
+    }));
   });
 
   describe('ytVideoPrepare', function() {
