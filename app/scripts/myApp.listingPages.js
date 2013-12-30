@@ -1,5 +1,16 @@
 angular.module('myApp.listingPages', ['ytCore','myApp.config'])
 
+  .factory('getSet', function() {
+    return function() {
+      var val;
+      return function(data) {
+        return arguments.length
+          ? (val = data)
+          : val;
+      }
+    };
+  })
+
   .value('appCategories', [
     'funny','programming', 'web development',
     'music', 'video games'
@@ -24,28 +35,23 @@ angular.module('myApp.listingPages', ['ytCore','myApp.config'])
     });
   })
 
-  .run(['$rootScope', 'TPL_PATH', function($rootScope, TPL_PATH) {
-    var template;
-    $rootScope.setColumnTemplate = function(tpl) {
-      template = TPL_PATH + tpl;
-    };
-    $rootScope.getColumnTemplate = function() {
-      return template;
-    };
-
-    var video;
-    $rootScope.setCurrentVideo = function(v) {
-      video = v;
-    };
-    $rootScope.getCurrentVideo = function() {
-      return video;
-    };
+  .run(        ['$rootScope', 'columnTemplate',
+        function($rootScope,   columnTemplate) {
+    $rootScope.getColumnTemplate = columnTemplate;
   }])
 
-  .controller('HomeCtrl', ['$scope', '$location', 'ytSearch', 'ytFeed',
-                   function($scope,   $location,   ytSearch,   ytFeed) {
+  .factory('columnTemplate', ['getSet', function(getSet) {
+    return getSet();
+  }])
 
-    $scope.setColumnTemplate('/categories.html');
+  .factory('currentVideo', ['getSet', function(getSet) {
+    return getSet();
+  }])
+
+  .controller('HomeCtrl', ['$scope', '$location', 'ytSearch', 'ytFeed', 'TPL_PATH', 'columnTemplate',
+                   function($scope,   $location,   ytSearch,   ytFeed,   TPL_PATH,   columnTemplate) {
+
+    columnTemplate(TPL_PATH + '/categories.html');
 
     $scope.$watchCollection(function() {
       return $location.search();
@@ -106,8 +112,8 @@ angular.module('myApp.listingPages', ['ytCore','myApp.config'])
     ];
   }])
 
-  .controller('WatchCtrl', ['$scope', '$location',  'videoInstance', 'ytVideoComments',
-                    function($scope,   $location,    videoInstance,   ytVideoComments) {
+  .controller('WatchCtrl', ['$scope', '$location',  'videoInstance', 'ytVideoComments', 'TPL_PATH', 'currentVideo', 'columnTemplate', 
+                    function($scope,   $location,    videoInstance,   ytVideoComments,   TPL_PATH,   currentVideo,   columnTemplate) {
 
     $scope.video_id = videoInstance.id;
 
@@ -115,16 +121,16 @@ angular.module('myApp.listingPages', ['ytCore','myApp.config'])
       $scope.video_comments = comments;
     });
 
-    $scope.setColumnTemplate('/video-panel.html');
-    $scope.setCurrentVideo(videoInstance);
+    currentVideo(videoInstance);
+    columnTemplate(TPL_PATH + '/video-panel.html');
 
     $scope.$on('$destroy', function() {
-      $scope.setCurrentVideo(null);
+      currentVideo(null);
     });
   }])
 
-  .controller('VideoPanelCtrl', ['$scope',
-                         function($scope) {
+  .controller('VideoPanelCtrl', ['$scope', 'currentVideo',
+                         function($scope,   currentVideo) {
 
-    $scope.video = $scope.getCurrentVideo();
+    $scope.video = currentVideo();
   }]);
