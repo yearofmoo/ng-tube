@@ -22,14 +22,26 @@
   box-shadow:inset #111 0 0 50px;
 }
 
+@media only screen and (max-width : 991px) {
+  .yr-videos-list-entry {
+    height:auto!important;
+  }
+
+  .yr-videos-list-entry img,
+  .yr-videos-list-entry > .yr-video-entry-link:after {
+    position:static!important;
+  }
+
+  .yr-videos-list-entry img {
+    width:100%!important;
+  }
+}
+
 .yr-videos-list-entry:hover {
   position:relative;
   z-index:200;
   -webkit-transform:scale(1.15);
   transform:scale(1.15);
-}
-
-.yr-videos-list-entry > .yr-video-entry-link:hover {
 }
 
 .yr-videos-list-entry img {
