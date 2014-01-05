@@ -1,23 +1,28 @@
 <script type="text/ng-template" id="video-entry">
 <a href="#/watch/{{ video.id }}" class="yr-video-entry-link">
   <img ng-src="{{ video.image.url }}" />
-  <h5>{{ video.title }}</h5>
+  <h5 class="yr-heading">{{ video.title }}</h5>
   <p>{{ video.description }}</p>
 </a>
 </script>
 
 <section class="yr-panel">
-  <header class="yr-panel-heading">
-    <h5 class="pull-left yr-heading">
-      <span ng-if="searchTerm">Videos matching <strong>{{ searchTerm }}</strong></span>
-      <span ng-if="!searchTerm">Latest Videos</span>
+  <header class="yr-panel-heading row">
+    <h5 class="yr-heading col-md-6">
+      Videos
+      <span ng-switch="searchMethod">
+        <span ng-switch-when="category">
+          within the <strong>"{{ searchTerm }}"</strong> category
+        </span>
+        <span ng-switch-when="query">
+          matching <strong>"{{ searchTerm }}"</strong>
+        </span>
+      </span>
     </h5>
 
-    <div ng-controller="CategoryListCtrl" class="yr-categories-list yr-panel-actions">
-      <div class="yr-categories-list-items pull-right">
-        <span class="yr-categories-list-item">
-          <span class="fa fa-search"></span>
-        </span>
+    <div ng-controller="CategoryListCtrl" class="yr-categories-list yr-panel-actions col-md-6">
+      <span class="fa fa-search"></span>
+      <div class="yr-categories-list-items">
         <a class="yr-categories-list-item"
            ng-repeat="category in categories"
            ng-href="#/?c={{ category }}"
@@ -25,12 +30,22 @@
           {{ category }}
         </a>
       </div>
+      <a href="" class="yr-view-icon" ng-click="setLayout('details')">
+        <span class="fa fa-list"></span>
+      </a>
+      <a href="" class="yr-view-icon" ng-click="setLayout('pictures')">
+        <span class="fa fa-th"></span>
+      </a>
     </div>
   </header>
   <div class="yr-panel-content">
     <div class="yr-videos-list row yr-grid">
       <div ng-include="'video-entry'"
            ng-repeat="video in latestVideos | limit:24"
-           class="yr-videos-list-entry col col-md-3 fade-listing"></div>
+           class="yr-videos-list-entry col col-md-3 fade-listing"
+           ng-class="{
+            'detail-layout col-md-6'  : isLayout('details'),
+            'picture-layout col-md-3' : isLayout('pictures')
+           }"></div>
   </div>
 </section>

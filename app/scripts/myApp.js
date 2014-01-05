@@ -53,11 +53,28 @@ angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
 
     columnTemplate(TPL_PATH + '/categories.html');
 
+    var layout;
+    $scope.setLayout = function(l) {
+      layout = l;
+    };
+
+    $scope.isLayout = function(l) {
+      return layout == l;
+    };
+
     $scope.$watchCollection(function() {
       return $location.search();
     }, function(data) {
-      var q = data.q;
-      $scope.searchTerm = q && q.length > 0 && q;
+      $scope.setLayout('pictures');
+
+      var c = data.c;
+      if(c && c.length > 0) {
+        $scope.searchTerm = c;
+        $scope.searchMethod = 'category';
+      } else {
+        $scope.searchMethod = 'query';
+        $scope.searchTerm = data.q || 'AngularJS';
+      }
 
       ytSearch(data).then(function(videos) {
         $scope.latestVideos = videos;
@@ -117,6 +134,7 @@ angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
                     function($scope,   $location,    videoInstance,   ytVideoComments,   TPL_PATH,   currentVideo,   columnTemplate) {
 
     $scope.video_id = videoInstance.id;
+    $scope.video = videoInstance;
 
     ytVideoComments(videoInstance.id).then(function(comments) {
       $scope.video_comments = comments;

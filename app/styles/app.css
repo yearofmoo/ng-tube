@@ -3,15 +3,25 @@
 }
 
 .yr-videos-list-entry {
-  height:200px;
-  overflow:hidden;
   position:relative;
   border:1px solid black;
-  -webkit-transition:0.2s;
-  transition:0.2s;
+
+  -webkit-transition-duration:0.2s;
+  transition-duration:0.2s;
+
+  -webkit-transition-property: opacity, -webkit-transform;
+  transition-property: opacity, transform;
+
+  overflow:hidden;
+  background:white;
 }
 
-.yr-videos-list-entry > .yr-video-entry-link:after {
+.yr-videos-list-entry.picture-layout {
+  height:200px;
+}
+
+.yr-videos-list-entry.picture-layout  > .yr-video-entry-link:after {
+  box-shadow:inset #111 0 0 50px;
   content:"";
   position:absolute;
   top:0;
@@ -19,7 +29,6 @@
   bottom:0;
   left:0;
   z-index:100;
-  box-shadow:inset #111 0 0 50px;
 }
 
 @media only screen and (max-width : 991px) {
@@ -32,19 +41,35 @@
     position:static!important;
   }
 
-  .yr-videos-list-entry img {
+  .yr-videos-list-entry.picture-layout img {
     width:100%!important;
   }
 }
 
-.yr-videos-list-entry:hover {
+.yr-videos-list-entry.picture-layout:hover {
   position:relative;
   z-index:200;
   -webkit-transform:scale(1.15);
   transform:scale(1.15);
 }
 
-.yr-videos-list-entry img {
+.yr-videos-list-entry.detail-layout {
+  height:120px;
+  padding:10px;
+  border:2px solid white;
+}
+
+.yr-videos-list-entry.detail-layout:hover {
+  border:2px solid #aaa;
+}
+
+.yr-videos-list-entry.detail-layout img {
+  margin:10px;
+  float:left;
+  height:100px;
+}
+
+.yr-videos-list-entry.picture-layout img {
   position:absolute;
   width:140%;
   left:-20%;
@@ -61,7 +86,20 @@
   box-shadow:0 0 50px #333;
 }
 
+.yr-view-icon {
+  font-size:20px;
+  padding:0px 10px;
+  display:inline-block;
+}
+
+.yr-panel-actions {
+  padding-top:5px;
+  text-align:right;
+}
+
 .yr-categories-list-items {
+  margin:0 10px;
+  display:inline-block;
   border-radius:5px;
   background:#ccc;
   padding:0 10px;
@@ -88,12 +126,6 @@
   overflow:auto;
   padding:10px;
   box-shadow:inset 0 0 10px #aaa;
-}
-
-.yr-panel-actions {
-  position:absolute;
-  top:15px;
-  right:15px;
 }
 
 .yr-heading {

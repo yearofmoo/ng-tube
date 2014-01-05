@@ -18,12 +18,12 @@
 
 .fade-listing.ng-enter {
   opacity:0;
-  -webkit-transform:scale(1.15);
-  transform:scale(1.15);
+  -webkit-transform:scale(1.15)!important;
+  transform:scale(1.15)!important;
 }
 
 .fade-listing.ng-enter.ng-enter-active {
   opacity:1;
-  -webkit-transform:scale(1);
-  transform:scale(1);
+  -webkit-transform:scale(1)!important;
+  transform:scale(1)!important;
 }
