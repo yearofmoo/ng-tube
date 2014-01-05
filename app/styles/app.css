@@ -28,7 +28,7 @@
   right:0;
   bottom:0;
   left:0;
-  z-index:100;
+  z-index:400;
 }
 
 @media only screen and (max-width : 991px) {
@@ -215,3 +215,37 @@
   clear:both;
   overflow:auto;
 }
+
+.yr-player-panel {
+  height:600px;
+  overflow:hidden;
+  position:relative;
+  border-bottom:1px solid #ddd;
+}
+
+.yr-player-panel .yr-player {
+  border:0;
+  position:absolute;
+  z-index:500;
+  top:0;
+  right:0;
+  left:0;
+  width:80%!important;
+  margin:50px 10%;
+}
+
+.yr-player-videos {
+  position:relative;
+}
+
+.yr-player-videos.off:after {
+  content:"";
+  position:absolute;
+  top:0;
+  right:0;
+  left:0;
+  bottom:0;
+  background:rgba(0,0,0,0.8);
+  z-index:100;
+}
+

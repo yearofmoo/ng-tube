@@ -5,6 +5,7 @@ angular.module('ytCore', [])
   .constant('YT_VIDEO_URL', 'https://gdata.youtube.com/feeds/api/videos/{ID}?v=2&alt=json&callback=JSON_CALLBACK')
   .constant('YT_VIDEO_COMMENTS_URL',   'https://gdata.youtube.com/feeds/api/videos/{ID}/comments?v=2&alt=json&callback=JSON_CALLBACK')
   .constant('YT_SEARCH_URL', 'https://gdata.youtube.com/feeds/api/videos/?v=2&alt=json&callback=JSON_CALLBACK')
+  .constant('YT_RELATED_URL', 'https://gdata.youtube.com/feeds/api/videos/{ID}/related?v=2&alt=json&callback=JSON_CALLBACK')
 
   .constant('YT_POPULAR_URL', 'https://gdata.youtube.com/feeds/api/standardfeeds/{FEED}?alt=json&callback=JSON_CALLBACK')
   .constant('YT_EMBED_URL',   'http://www.youtube.com/embed/{ID}?autoplay=1')
@@ -59,6 +60,13 @@ angular.module('ytCore', [])
 
       var url = ytSearchParams(YT_SEARCH_URL, data);
       return ytVideos(url);
+    };
+  }])
+
+  .factory('ytRelatedVideos', ['ytVideos', 'YT_RELATED_URL',
+                       function(ytVideos,   YT_RELATED_URL) {
+    return function(videoID) {
+      return ytVideos(YT_RELATED_URL.replace('{ID}', videoID));
     };
   }])
 

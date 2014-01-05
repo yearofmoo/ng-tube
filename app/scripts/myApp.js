@@ -72,8 +72,9 @@ angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
         $scope.searchTerm = c;
         $scope.searchMethod = 'category';
       } else {
+        data.q = data.q || 'AngularJS';
         $scope.searchMethod = 'query';
-        $scope.searchTerm = data.q || 'AngularJS';
+        $scope.searchTerm = data.q;
       }
 
       ytSearch(data).then(function(videos) {
@@ -130,10 +131,11 @@ angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
     ];
   }])
 
-  .controller('WatchCtrl', ['$scope', '$location',  'videoInstance', 'ytVideoComments', 'TPL_PATH', 'currentVideo', 'columnTemplate',
-                    function($scope,   $location,    videoInstance,   ytVideoComments,   TPL_PATH,   currentVideo,   columnTemplate) {
+  .controller('WatchCtrl', ['$scope', '$location',  'videoInstance', 'ytVideoComments', 'TPL_PATH', 'currentVideo', 'columnTemplate', 'ytSearch', 'ytRelatedVideos',
+                    function($scope,   $location,    videoInstance,   ytVideoComments,   TPL_PATH,   currentVideo,   columnTemplate,   ytSearch,   ytRelatedVideos) {
 
-    $scope.video_id = videoInstance.id;
+    var videoID = videoInstance.id;
+    $scope.video_id = videoID;
     $scope.video = videoInstance;
 
     ytVideoComments(videoInstance.id).then(function(comments) {
@@ -142,6 +144,10 @@ angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
 
     currentVideo(videoInstance);
     columnTemplate(TPL_PATH + '/video-panel.html');
+
+    ytRelatedVideos(videoID).then(function(videos) {
+      $scope.relatedVideos = videos;
+    });
 
     $scope.$on('$destroy', function() {
       currentVideo(null);

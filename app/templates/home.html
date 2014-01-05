@@ -42,7 +42,7 @@
     <div class="yr-videos-list row yr-grid">
       <div ng-include="'video-entry'"
            ng-repeat="video in latestVideos | limit:24"
-           class="yr-videos-list-entry col col-md-3 fade-listing"
+           class="yr-videos-list-entry col fade-listing"
            ng-class="{
             'detail-layout col-md-6'  : isLayout('details'),
             'picture-layout col-md-3' : isLayout('pictures')
