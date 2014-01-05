@@ -15,7 +15,7 @@
             <input type="search" ng-model="q" class="yr-search-input" placeholder="Search youtube..." />
             <a href="" class="yr-advanced-search-link" ng-click="advanced = advanced ? null : {}">
               <span class="fa fa-cog"></span>
-              Advanced Search
+              Search Tools
             </a>
           </section>
           <section ng-if="advanced" class="yr-advanced-search-header row">
@@ -36,14 +36,7 @@
         </form>
       </header>
       <main id="view-container">
-        <div class="row">
-          <div class="col-md-9">
-            <div ng-view></div>
-          </div>
-          <aside class="yr-side-navigation yr-categories-list">
-            <div ng-include="getColumnTemplate()"></div>
-          </aside>
-        </div>
+        <div ng-view></div>
       </main>
       <footer>Footer</footer>
     </div>

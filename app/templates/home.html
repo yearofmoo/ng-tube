@@ -8,14 +8,29 @@
 
 <section class="yr-panel">
   <header class="yr-panel-heading">
-    <h5>
+    <h5 class="pull-left yr-heading">
       <span ng-if="searchTerm">Videos matching <strong>{{ searchTerm }}</strong></span>
       <span ng-if="!searchTerm">Latest Videos</span>
     </h5>
+
+    <div ng-controller="CategoryListCtrl" class="yr-categories-list yr-panel-actions">
+      <div class="yr-categories-list-items pull-right">
+        <span class="yr-categories-list-item">
+          <span class="fa fa-search"></span>
+        </span>
+        <a class="yr-categories-list-item"
+           ng-repeat="category in categories"
+           ng-href="#/?c={{ category }}"
+           ng-class="{selected:current_category==category}">
+          {{ category }}
+        </a>
+      </div>
+    </div>
   </header>
   <div class="yr-panel-content">
     <div class="yr-videos-list row yr-grid">
-      <div ng-include="'video-entry'" ng-repeat="video in latestVideos | limit:24" class="yr-videos-list-entry col col-xs-4 fade-listing">
-    </div>
+      <div ng-include="'video-entry'"
+           ng-repeat="video in latestVideos | limit:24"
+           class="yr-videos-list-entry col col-xs-3 fade-listing"></div>
   </div>
 </section>

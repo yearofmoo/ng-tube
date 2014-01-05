@@ -1,12 +1,28 @@
 <section class="yr-panel">
-  <div class="yr-panel-content">
-    <div yt-video-player="{{ video_id }}"></div>
-    <div class="yr-video-comments">
-      <div class="yr-video-comments-header">
-        <input type="search" ng-model="q" />
+  <header class="yr-panel-heading">
+    <h5 class="pull-left yr-heading">
+      {{ video.title }}
+    </h5>
+  </header>
+
+  <div yt-video-player="{{ video_id }}"></div>
+
+  <div class="row">
+    <div class="col-md-8">
+      <div class="yr-video-comments">
+        <div class="yr-video-comments-header">
+          <input type="search" ng-model="q" />
+        </div>
+        <div ng-repeat="comment in video_comments | filter:q" class="yr-video-comment">
+          {{ comment.content }}
+        </div>
       </div>
-      <div ng-repeat="comment in video_comments | filter:q" class="yr-video-comment">
-        {{ comment.content }}
+    </div>
+    <div ng-controller="VideoPanelCtrl" class="yr-video-panel col-md-4">
+      <img ng-src="{{ video.image.url }}" width="100%" />
+      <div class="yr-video-panel-inner">
+        <h4>{{ video.title }}</h4>
+        <p>{{ video.description }}</p>
       </div>
     </div>
   </div>
