@@ -20,6 +20,11 @@
   height:200px;
 }
 
+.yr-videos-list-entry.thumb-layout {
+  height:150px;
+}
+
+.yr-videos-list-entry.thumb-layout  > .yr-video-entry-link:after,
 .yr-videos-list-entry.picture-layout  > .yr-video-entry-link:after {
   box-shadow:inset #111 0 0 50px;
   content:"";
@@ -40,11 +45,13 @@
     position:static!important;
   }
 
+  .yr-videos-list-entry.thumb-layout img,
   .yr-videos-list-entry.picture-layout img {
     width:100%!important;
   }
 }
 
+.yr-videos-list-entry.thumb-layout:hover,
 .yr-videos-list-entry.picture-layout:hover {
   position:relative;
   z-index:200;

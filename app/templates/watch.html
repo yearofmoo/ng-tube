@@ -37,23 +37,27 @@
       <div class="yr-video-comments">
         <div ng-repeat="comment in video_comments | filter:q | limit:12"
              ng-class-even="'even'"
-             class="yr-video-comment">
-          {{ comment.content }}
+             class="yr-video-comment row">
+               <strong class="col-md-2">
+                 <span class="fa fa-user"></span>
+                 {{ comment.author }}:
+               </strong>
+               <p class="col-md-9">{{ comment.content }}</p>
         </div>
       </div>
     </div>
     <div ng-controller="VideoPanelCtrl" class="yr-video-panel col-md-4 col">
       <header class="yr-panel-heading">
         <h5 class="yr-heading">
-          Video Info
+          Related Videos
         </h5>
       </header>
 
       <div class="yr-player-videos off">
         <div class="yr-videos-list row yr-grid">
           <div ng-include="tpl('video-listing')"
-               ng-repeat="video in relatedVideos | limit:12"
-               class="col-md-6 yr-videos-list-entry picture-layout">
+               ng-repeat="video in relatedVideos | limit:14"
+               class="col-md-6 yr-videos-list-entry thumb-layout">
           </div>
         </div>
       </div>

@@ -150,6 +150,7 @@ angular.module('ytCore', [])
           var comments = [];
           angular.forEach(response.feed.entry, function(comment) {
             comments.push({
+              author : comment.author[0].name.$t,
               content : comment.content.$t
             });
           });
