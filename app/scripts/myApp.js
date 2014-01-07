@@ -40,6 +40,17 @@ angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
     $rootScope.tpl = function(file) {
       return TPL_PATH + '/' + file + '.html';
     };
+
+    $rootScope.$on('$routeChangeStart', function() {
+    });
+  }])
+
+  .directive('yrScrollToTop', ['$window', '$rootScope', function($window, $rootScope) {
+    return function() {
+      $rootScope.$on('$routeChangeStart', function() {
+        $window.scrollTo(0, 0);
+      });
+    };
   }])
 
   .factory('columnTemplate', ['getSet', function(getSet) {
@@ -98,8 +109,6 @@ angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
   .controller('CategoryListCtrl', ['$scope', 'appCategories',
                            function($scope,   appCategories) {
     $scope.categories = appCategories;
-    //var categoryMatch = appCategories.indexOf(q);
-    //$scope.currentCategory = categoryMatch >= 0 ? appCategories[categoryMatch] : null;
   }])
 
   .controller('SearchFormCtrl', ['$scope', '$location',
@@ -112,12 +121,18 @@ angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
         category = $scope.advanced.category;
       }
 
+      $scope.advanced = false;
+
       $location.search({
         q : q || '',
         c : category || '',
         o : order || ''
       }).path('/');
     };
+
+    $scope.$on('$routeChangeStart', function() {
+      $scope.advanced = false;
+    });
 
     $scope.orderingOptions = [
       'relevance',
