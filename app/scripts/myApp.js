@@ -35,9 +35,11 @@ angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
     });
   })
 
-  .run(        ['$rootScope', 'columnTemplate',
-        function($rootScope,   columnTemplate) {
-    $rootScope.getColumnTemplate = columnTemplate;
+  .run(        ['$rootScope', 'columnTemplate', 'TPL_PATH',
+        function($rootScope,   columnTemplate,   TPL_PATH) {
+    $rootScope.tpl = function(file) {
+      return TPL_PATH + '/' + file + '.html';
+    };
   }])
 
   .factory('columnTemplate', ['getSet', function(getSet) {

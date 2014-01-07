@@ -96,6 +96,10 @@
   text-align:right;
 }
 
+.yr-padded {
+  padding:20px;
+}
+
 .yr-categories-list-items {
   margin:0 10px;
   display:inline-block;
@@ -124,7 +128,12 @@
   background:#ddd;
   overflow:auto;
   padding:10px;
+  border-top:20px solid #ac0809;
   box-shadow:inset 0 0 10px #aaa;
+}
+
+.yr-panel-heading.sub-heading {
+  background:#eee;
 }
 
 .yr-heading {
@@ -132,7 +141,7 @@
 }
 
 .yr-header {
-  box-shadow:0 0 20px #444;
+  box-shadow:0 0 20px #000;
   background:#333;
   position:fixed;
   top:0;
@@ -149,7 +158,10 @@
 
 .yr-video-comment {
   padding:1em;
-  border-bottom:1px solid #ddd;
+}
+
+.yr-video-comment.even {
+  background:#f3f3f3;
 }
 
 .yr-nav-icon {
@@ -216,10 +228,10 @@
 }
 
 .yr-player-panel {
-  height:600px;
+  height:640px;
   overflow:hidden;
   position:relative;
-  border-bottom:1px solid #ddd;
+  background:url(/bg.png);
 }
 
 .yr-player-panel .yr-player {
@@ -236,15 +248,3 @@
 .yr-player-videos {
   position:relative;
 }
-
-.yr-player-videos.off:after {
-  content:"";
-  position:absolute;
-  top:0;
-  right:0;
-  left:0;
-  bottom:0;
-  background:rgba(0,0,0,0.8);
-  z-index:100;
-}
-

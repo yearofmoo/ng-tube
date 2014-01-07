@@ -1,11 +1,3 @@
-<script type="text/ng-template" id="video-entry">
-<a href="#/watch/{{ video.id }}" class="yr-video-entry-link">
-  <img ng-src="{{ video.image.url }}" />
-  <h5 class="yr-heading">{{ video.title }}</h5>
-  <p>{{ video.description }}</p>
-</a>
-</script>
-
 <section class="yr-panel">
   <header class="yr-panel-heading row">
     <h5 class="yr-heading col-md-6">
@@ -40,7 +32,7 @@
   </header>
   <div class="yr-panel-content">
     <div class="yr-videos-list row yr-grid">
-      <div ng-include="'video-entry'"
+      <div ng-include="tpl('video-listing')"
            ng-repeat="video in latestVideos | limit:24"
            class="yr-videos-list-entry col fade-listing"
            ng-class="{
