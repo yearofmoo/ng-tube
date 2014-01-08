@@ -35,14 +35,11 @@ angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
     });
   })
 
-  .run(        ['$rootScope', 'columnTemplate', 'TPL_PATH',
-        function($rootScope,   columnTemplate,   TPL_PATH) {
+  .run(        ['$rootScope', 'TPL_PATH',
+        function($rootScope,   TPL_PATH) {
     $rootScope.tpl = function(file) {
       return TPL_PATH + '/' + file + '.html';
     };
-
-    $rootScope.$on('$routeChangeStart', function() {
-    });
   }])
 
   .directive('yrScrollToTop', ['$window', '$rootScope', function($window, $rootScope) {
