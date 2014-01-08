@@ -135,9 +135,7 @@
   position:relative;
   background:#ddd;
   overflow:auto;
-  padding:10px;
-  border-top:20px solid #610910;
-  box-shadow:inset 0 0 10px #aaa;
+  padding:10px 20px;
 }
 
 .yr-panel-heading.sub-heading {
@@ -149,6 +147,7 @@
 }
 
 .yr-header {
+  border-top:2px solid #222;
   box-shadow:0 0 20px #000;
   background:#333;
   position:fixed;
@@ -181,11 +180,10 @@
 
 .yr-nav-icon {
   background:#222;
-  box-shadow:inset #111 0 0 50px;
 }
 
 .yr-search-icon {
-  background:#ac0809;
+  background:#610910;
 }
 
 .yr-nav-icon,
@@ -216,12 +214,12 @@
 }
 
 .yr-advanced-search-link {
-  box-shadow:inset #111 0 0 50px;
   float:right;
   line-height:30px;
   padding:0 20px;
   border-radius:5px;
   margin:10px;
+  margin-right:50px;
   background:#444;
 }
 
@@ -240,6 +238,7 @@
 }
 
 .yr-player-panel {
+  border-bottom:20px solid #610910;
   height:640px;
   overflow:hidden;
   position:relative;

@@ -1,0 +1,26 @@
+#nprogress > .spinner,
+#nprogress > .bar {
+  /* override the default z-index since it won't show up ontop of our header */
+  z-index:10000;
+}
+
+#nprogress > .bar {
+  /* a nice red bar instead of the default color */
+  background:red;
+  height:2px;
+}
+
+#nprogress > .bar > .peg {
+  box-shadow:0 0 10px maroon, 0 0 5px maroon;
+}
+
+#nprogress > .spinner > .spinner-icon {
+  border-top-color:red;
+  border-bottom-color:red;
+  border-left-color:transparent;
+  border-right-color:transparent;
+  border-width:2px;
+  border-radius:30px;
+  width:25px;
+  height:25px;
+}

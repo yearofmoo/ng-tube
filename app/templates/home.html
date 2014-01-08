@@ -33,7 +33,7 @@
   <div class="yr-panel-content">
     <div class="yr-videos-list row yr-grid">
       <div ng-include="tpl('video-listing')"
-           ng-repeat="video in latestVideos | limit:24"
+           ng-repeat="video in videos | limit:24"
            class="yr-videos-list-entry col fade-listing"
            ng-class="{
             'detail-layout col-md-6'  : isLayout('details'),

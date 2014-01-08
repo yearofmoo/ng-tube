@@ -2,6 +2,17 @@ angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
 
   .constant('TPL_PATH', './templates')
 
+  .run(['$rootScope', 'TPL_PATH', function($rootScope,   TPL_PATH) {
+    $rootScope.tpl = function(file) {
+      return TPL_PATH + '/' + file + '.html';
+    };
+
+    $rootScope.$on('$routeChangeStart', function() {
+      $rootScope.$broadcast('yrLoadingStart');
+    });
+  }])
+
+
   .factory('getSet', function() {
     return function() {
       var val;
@@ -35,13 +46,6 @@ angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
     });
   })
 
-  .run(        ['$rootScope', 'TPL_PATH',
-        function($rootScope,   TPL_PATH) {
-    $rootScope.tpl = function(file) {
-      return TPL_PATH + '/' + file + '.html';
-    };
-  }])
-
   .directive('yrScrollToTop', ['$window', '$rootScope', function($window, $rootScope) {
     return function() {
       $rootScope.$on('$routeChangeStart', function() {
@@ -50,18 +54,25 @@ angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
     };
   }])
 
-  .factory('columnTemplate', ['getSet', function(getSet) {
-    return getSet();
-  }])
+  .directive('yrLoadingIndicator', function() {
+    return function(scope) {
+      NProgress.configure({ ease: 'ease', speed: 500 });
+
+      scope.$on('yrLoadingStart', function() {
+        NProgress.start();
+      });
+      scope.$on('yrLoadingEnd', function() {
+        NProgress.done();
+      });
+    };
+  })
 
   .factory('currentVideo', ['getSet', function(getSet) {
     return getSet();
   }])
 
-  .controller('HomeCtrl', ['$scope', '$location', 'ytSearch', 'ytFeed', 'TPL_PATH', 'columnTemplate',
-                   function($scope,   $location,   ytSearch,   ytFeed,   TPL_PATH,   columnTemplate) {
-
-    columnTemplate(TPL_PATH + '/categories.html');
+  .controller('HomeCtrl', ['$scope', '$rootScope', '$location', 'ytSearch', 'ytFeed', 'TPL_PATH',
+                   function($scope,   $rootScope,   $location,   ytSearch,   ytFeed,   TPL_PATH) {
 
     var layout;
     $scope.setLayout = function(l) {
@@ -72,9 +83,18 @@ angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
       return layout == l;
     };
 
+    function hasLocationChanged() {
+      return $location.path().indexOf('watch') >= 0;
+    };
+
     $scope.$watchCollection(function() {
       return $location.search();
     }, function(data) {
+
+      //do not reload the results if the location changed to
+      //the watch page
+      if(hasLocationChanged()) return;
+
       $scope.setLayout('pictures');
 
       var c = data.c;
@@ -87,8 +107,11 @@ angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
         $scope.searchTerm = data.q;
       }
 
+      $rootScope.$broadcast('yrLoadingStart');
+
       ytSearch(data).then(function(videos) {
-        $scope.latestVideos = videos;
+        $scope.videos = videos;
+        $rootScope.$broadcast('yrLoadingEnd');
       });
 
       ytFeed('most_popular').then(function(videos) {
@@ -145,8 +168,8 @@ angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
     ];
   }])
 
-  .controller('WatchCtrl', ['$scope', '$location',  'videoInstance', 'ytVideoComments', 'TPL_PATH', 'currentVideo', 'columnTemplate', 'ytSearch', 'ytRelatedVideos',
-                    function($scope,   $location,    videoInstance,   ytVideoComments,   TPL_PATH,   currentVideo,   columnTemplate,   ytSearch,   ytRelatedVideos) {
+  .controller('WatchCtrl', ['$scope', '$rootScope', '$location',  'videoInstance', 'ytVideoComments', 'TPL_PATH', 'currentVideo', 'ytSearch', 'ytRelatedVideos',
+                    function($scope,   $rootScope,   $location,    videoInstance,   ytVideoComments,   TPL_PATH,   currentVideo,   ytSearch,   ytRelatedVideos) {
 
     var videoID = videoInstance.id;
     $scope.video_id = videoID;
@@ -157,10 +180,10 @@ angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
     });
 
     currentVideo(videoInstance);
-    columnTemplate(TPL_PATH + '/video-panel.html');
 
     ytRelatedVideos(videoID).then(function(videos) {
       $scope.relatedVideos = videos;
+      $rootScope.$broadcast('yrLoadingEnd');
     });
 
     $scope.$on('$destroy', function() {
