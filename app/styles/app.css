@@ -75,6 +75,7 @@
   height:100px;
 }
 
+.yr-videos-list-entry.thumb-layout img,
 .yr-videos-list-entry.picture-layout img {
   position:absolute;
   width:140%;
@@ -135,7 +136,7 @@
   background:#ddd;
   overflow:auto;
   padding:10px;
-  border-top:20px solid #ac0809;
+  border-top:20px solid #610910;
   box-shadow:inset 0 0 10px #aaa;
 }
 
@@ -180,6 +181,7 @@
 
 .yr-nav-icon {
   background:#222;
+  box-shadow:inset #111 0 0 50px;
 }
 
 .yr-search-icon {
@@ -214,9 +216,12 @@
 }
 
 .yr-advanced-search-link {
+  box-shadow:inset #111 0 0 50px;
   float:right;
-  line-height:50px;
+  line-height:30px;
   padding:0 20px;
+  border-radius:5px;
+  margin:10px;
   background:#444;
 }
 
