@@ -12,7 +12,7 @@
           <section>
             <a href="#/" class="fa fa-home yr-nav-icon"></a>
             <span class="fa fa-search yr-nav-icon yr-search-icon" ng-click="search()"></span>
-            <input type="search" ng-model="q" class="yr-search-input" placeholder="Search youtube..." />
+            <input type="search" ng-model="q" class="yr-search-input" />
             <a href="" class="yr-advanced-search-link" ng-click="advanced = advanced ? null : {}">
               <span class="fa fa-cog"></span>
               Search Tools
@@ -38,6 +38,9 @@
       <main id="view-container">
         <div ng-view></div>
       </main>
+      <footer class="yr-footer">
+        <h4>ng-tube</h4>
+      </footer>
     </div>
     <script src="./assets/app.js"></script>
     <script src="//localhost:7777/livereload.js"></script>

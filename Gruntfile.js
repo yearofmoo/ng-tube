@@ -19,6 +19,9 @@ module.exports = function(grunt) {
       },
       npm_install: {
         command: 'npm install'
+      },
+      fonts: {
+        command: 'cp -R bower_components/open-sans-fontface/fonts app/assets'
       }
     },
 
@@ -86,6 +89,7 @@ module.exports = function(grunt) {
           'bower_components/nprogress/nprogress.css',
           'app/styles/nprogress-overrides.css',
           'app/styles/yt.css',
+          'bower_components/open-sans-fontface/open-sans.css',
           'app/styles/app.css',
           'app/styles/animations.css'
         ]
@@ -174,7 +178,7 @@ module.exports = function(grunt) {
 
   //installation-related
   grunt.registerTask('install', ['update','shell:protractor_install']);
-  grunt.registerTask('update', ['shell:npm_install', 'concat']);
+  grunt.registerTask('update', ['shell:npm_install', 'shell:fonts', 'concat']);
 
   //defaults
   grunt.registerTask('default', ['dev']);

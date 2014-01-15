@@ -1,3 +1,7 @@
+select, input, option {
+  font-family: 'Open Sans';
+}
+
 #view-container {
   padding-top:50px;
 }
@@ -143,12 +147,14 @@
 }
 
 .yr-heading {
+  font-family: 'Open Sans';
   font-size:1.5em;
 }
 
 .yr-header {
   border-top:2px solid #222;
-  box-shadow:0 0 20px #000;
+  box-shadow:0 0 50px #000;
+  border-bottom:1px solid #222;
   background:#333;
   position:fixed;
   top:0;
@@ -179,11 +185,11 @@
 }
 
 .yr-nav-icon {
-  background:#222;
+  background:#610910;
 }
 
 .yr-search-icon {
-  background:#610910;
+  background:#222;
 }
 
 .yr-nav-icon,
