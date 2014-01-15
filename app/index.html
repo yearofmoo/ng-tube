@@ -1,24 +1,24 @@
 <!DOCTYPE html> 
-<html data-ng-app="myApp">
+<html data-ng-app="ntApp">
   <head>
     <title>ng-tube</title>
     <link rel="stylesheet" type="text/css" href="./assets/app.css" />
   </head>
 
-  <body yr-scroll-to-top yr-loading-indicator>
+  <body nt-scroll-to-top nt-loading-indicator>
     <div id="wrapper">
-      <header class="yr-header">
-        <form ng-submit="search()" ng-controller="SearchFormCtrl" class="yr-search-header">
+      <header class="nt-header">
+        <form ng-submit="search()" ng-controller="SearchFormCtrl" class="nt-search-header">
           <section>
-            <a href="#/" class="fa fa-home yr-nav-icon"></a>
-            <span class="fa fa-search yr-nav-icon yr-search-icon" ng-click="search()"></span>
-            <input type="search" ng-model="q" class="yr-search-input" />
-            <a href="" class="yr-advanced-search-link" ng-click="advanced = advanced ? null : {}">
+            <a href="#/" class="fa fa-home nt-nav-icon"></a>
+            <span class="fa fa-search nt-nav-icon nt-search-icon" ng-click="search()"></span>
+            <input type="search" ng-model="q" class="nt-search-input" />
+            <a href="" class="nt-advanced-search-link" ng-click="advanced = advanced ? null : {}">
               <span class="fa fa-cog"></span>
               Search Tools
             </a>
           </section>
-          <section ng-if="advanced" class="yr-advanced-search-header row">
+          <section ng-if="advanced" class="nt-advanced-search-header row">
             <datalist id="categories" ng-controller="CategoryListCtrl">
               <option value="{{ category }}" ng-repeat="category in categories" />
             </datalist>
@@ -38,7 +38,7 @@
       <main id="view-container">
         <div ng-view></div>
       </main>
-      <footer class="yr-footer">
+      <footer class="nt-footer">
         <h4>ng-tube</h4>
       </footer>
     </div>

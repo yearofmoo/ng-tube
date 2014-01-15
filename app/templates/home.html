@@ -1,6 +1,6 @@
-<section class="yr-panel">
-  <header class="yr-panel-heading yr-primary-heading row">
-    <h5 class="yr-heading col-md-6">
+<section class="nt-panel">
+  <header class="nt-panel-heading nt-primary-heading row">
+    <h5 class="nt-heading col-md-6">
       Videos
       <span ng-switch="searchMethod">
         <span ng-switch-when="category">
@@ -12,29 +12,29 @@
       </span>
     </h5>
 
-    <div ng-controller="CategoryListCtrl" class="yr-categories-list yr-panel-actions col-md-6">
+    <div ng-controller="CategoryListCtrl" class="nt-categories-list nt-panel-actions col-md-6">
       <span class="fa fa-search"></span>
-      <div class="yr-categories-list-items">
-        <a class="yr-categories-list-item"
+      <div class="nt-categories-list-items">
+        <a class="nt-categories-list-item"
            ng-repeat="category in categories"
            ng-href="#/?c={{ category }}"
            ng-class="{selected:current_category==category}">
           {{ category }}
         </a>
       </div>
-      <a href="" class="yr-view-icon" ng-click="setLayout('details')">
+      <a href="" class="nt-view-icon" ng-click="setLayout('details')">
         <span class="fa fa-list"></span>
       </a>
-      <a href="" class="yr-view-icon" ng-click="setLayout('pictures')">
+      <a href="" class="nt-view-icon" ng-click="setLayout('pictures')">
         <span class="fa fa-th"></span>
       </a>
     </div>
   </header>
-  <div class="yr-panel-content">
-    <div class="yr-videos-list row yr-grid">
+  <div class="nt-panel-content">
+    <div class="nt-videos-list row nt-grid">
       <div ng-include="tpl('video-listing')"
            ng-repeat="video in videos | limit:24"
-           class="yr-videos-list-entry col fade-listing"
+           class="nt-videos-list-entry col fade-listing"
            ng-class="{
             'detail-layout col-md-6'  : isLayout('details'),
             'picture-layout col-md-3' : isLayout('pictures')

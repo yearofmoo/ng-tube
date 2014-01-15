@@ -1,4 +1,4 @@
-angular.module('myApp', ['ytCore', 'ngRoute'])
+angular.module('ntApp', ['ytCore', 'ngRoute'])
 
   .constant('TPL_PATH', './templates')
 
@@ -8,7 +8,7 @@ angular.module('myApp', ['ytCore', 'ngRoute'])
     };
 
     $rootScope.$on('$routeChangeStart', function() {
-      $rootScope.$broadcast('yrLoadingStart');
+      $rootScope.$broadcast('ntLoadingStart');
     });
   }])
 
@@ -46,7 +46,7 @@ angular.module('myApp', ['ytCore', 'ngRoute'])
     });
   })
 
-  .directive('yrScrollToTop', ['$window', '$rootScope', function($window, $rootScope) {
+  .directive('ntScrollToTop', ['$window', '$rootScope', function($window, $rootScope) {
     return function() {
       $rootScope.$on('$routeChangeStart', function() {
         $window.scrollTo(0, 0);
@@ -54,14 +54,14 @@ angular.module('myApp', ['ytCore', 'ngRoute'])
     };
   }])
 
-  .directive('yrLoadingIndicator', function() {
+  .directive('ntLoadingIndicator', function() {
     return function(scope) {
       NProgress.configure({ ease: 'ease', speed: 500 });
 
-      scope.$on('yrLoadingStart', function() {
+      scope.$on('ntLoadingStart', function() {
         NProgress.start();
       });
-      scope.$on('yrLoadingEnd', function() {
+      scope.$on('ntLoadingEnd', function() {
         NProgress.done();
       });
     };
@@ -107,11 +107,11 @@ angular.module('myApp', ['ytCore', 'ngRoute'])
         $scope.searchTerm = data.q;
       }
 
-      $rootScope.$broadcast('yrLoadingStart');
+      $rootScope.$broadcast('ntLoadingStart');
 
       ytSearch(data).then(function(videos) {
         $scope.videos = videos;
-        $rootScope.$broadcast('yrLoadingEnd');
+        $rootScope.$broadcast('ntLoadingEnd');
       });
 
       ytFeed('most_popular').then(function(videos) {
@@ -183,7 +183,7 @@ angular.module('myApp', ['ytCore', 'ngRoute'])
 
     ytRelatedVideos(videoID).then(function(videos) {
       $scope.relatedVideos = videos;
-      $rootScope.$broadcast('yrLoadingEnd');
+      $rootScope.$broadcast('ntLoadingEnd');
     });
 
     $scope.$on('$destroy', function() {

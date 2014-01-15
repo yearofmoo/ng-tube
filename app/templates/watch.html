@@ -1,43 +1,43 @@
-<section class="yr-panel">
-  <header class="yr-panel-heading yr-primary-heading">
-    <h5 class="yr-heading">
+<section class="nt-panel">
+  <header class="nt-panel-heading nt-primary-heading">
+    <h5 class="nt-heading">
       {{ video.title }}
     </h5>
   </header>
 
-  <div class="yr-player-panel">
-    <div class="yr-player" yt-video-player="{{ video_id }}"></div>
+  <div class="nt-player-panel">
+    <div class="nt-player" yt-video-player="{{ video_id }}"></div>
   </div>
 
-  <div class="row yr-grid">
+  <div class="row nt-grid">
     <div class="col-md-8 col">
-      <header class="yr-panel-heading">
-        <h5 class="yr-heading">
+      <header class="nt-panel-heading">
+        <h5 class="nt-heading">
           Video Info
         </h5>
       </header>
 
-      <div class="row yr-padded">
+      <div class="row nt-padded">
         <img ng-src="{{ video.image.url }}" class="col-md-4" />
-        <div class="yr-video-panel-inner col-md-8">
+        <div class="nt-video-panel-inner col-md-8">
           <h4>{{ video.title }}</h4>
           <p>{{ video.description }}</p>
         </div>
       </div>
 
-      <header class="yr-panel-heading row sub-heading">
-        <h5 class="yr-heading col-md-6">
+      <header class="nt-panel-heading row sub-heading">
+        <h5 class="nt-heading col-md-6">
           Comments
         </h5>
-        <div class="yr-video-comments-header col-md-6">
+        <div class="nt-video-comments-header col-md-6">
           <input type="search" ng-model="q" class="col-md-11 form-control" placeholder="Filter comments..." />
         </div>
       </header>
 
-      <div class="yr-video-comments">
+      <div class="nt-video-comments">
         <div ng-repeat="comment in video_comments | filter:q | limit:12"
              ng-class-even="'even'"
-             class="yr-video-comment row">
+             class="nt-video-comment row">
                <strong class="col-md-2">
                  <span class="fa fa-user"></span>
                  {{ comment.author }}:
@@ -46,18 +46,18 @@
         </div>
       </div>
     </div>
-    <div ng-controller="VideoPanelCtrl" class="yr-video-panel col-md-4 col">
-      <header class="yr-panel-heading">
-        <h5 class="yr-heading">
+    <div ng-controller="VideoPanelCtrl" class="nt-video-panel col-md-4 col">
+      <header class="nt-panel-heading">
+        <h5 class="nt-heading">
           Related Videos
         </h5>
       </header>
 
-      <div class="yr-player-videos off">
-        <div class="yr-videos-list row yr-grid">
+      <div class="nt-player-videos off">
+        <div class="nt-videos-list row nt-grid">
           <div ng-include="tpl('video-listing')"
                ng-repeat="video in relatedVideos | limit:14"
-               class="col-md-6 yr-videos-list-entry thumb-layout">
+               class="col-md-6 nt-videos-list-entry thumb-layout">
           </div>
         </div>
       </div>
