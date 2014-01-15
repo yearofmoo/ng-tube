@@ -1,4 +1,4 @@
-angular.module('myApp', ['ytCore', 'ngRoute', 'ngAnimate'])
+angular.module('myApp', ['ytCore', 'ngRoute'])
 
   .constant('TPL_PATH', './templates')
 
