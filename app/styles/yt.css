@@ -1,4 +1,38 @@
+.yt-video-poster,
 .yt-video-player {
   width:100%;
   height:500px;
+}
+
+.yt-video-player {
+  border:0;
+}
+
+.yt-video-poster {
+  background:black;
+  position:relative;
+  text-align:center;
+  cursor:pointer;
+}
+
+.yt-video-poster img {
+  margin:0 auto;
+  height:100%;
+}
+
+.yt-video-play-button {
+  position:absolute;
+  top:50%;
+  left:50%;
+  font-size:50px;
+  box-shadow:0 0 10px #ddd;
+  line-height:100px;
+  background:maroon;
+  color:white;
+  border-radius:10px;
+  z-index:100;
+  margin-top:-50px;
+  margin-left:-50px;
+  width:100px;
+  height:100px;
 }

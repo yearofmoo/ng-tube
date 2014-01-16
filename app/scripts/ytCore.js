@@ -9,6 +9,7 @@ angular.module('ytCore', [])
 
   .constant('YT_POPULAR_URL', 'https://gdata.youtube.com/feeds/api/standardfeeds/{FEED}?alt=json&callback=JSON_CALLBACK')
   .constant('YT_EMBED_URL',   'http://www.youtube.com/embed/{ID}?autoplay=1')
+  .constant('YT_POSTER_URL',   'https://i1.ytimg.com/vi/{ID}/hqdefault.jpg')
 
   .config(['$sceDelegateProvider', function($sceDelegateProvider) {
     $sceDelegateProvider.resourceUrlWhitelist(['self', 'http://www.youtube.com/**']);
@@ -170,21 +171,32 @@ angular.module('ytCore', [])
     };
   }])
 
-  .directive('ytVideoPlayer', ['ytCreateEmbedURL',
-                       function(ytCreateEmbedURL) {
+  .factory('ytCreatePosterUrl', ['YT_POSTER_URL',
+                         function(YT_POSTER_URL) {
+    return function(id) {
+      return YT_POSTER_URL.replace('{ID}', id);
+    };
+  }])
+
+  .directive('ytVideoPlayer', ['ytCreateEmbedURL', 'ytCreatePosterUrl',
+                       function(ytCreateEmbedURL,   ytCreatePosterUrl) {
     return {
       controller: ['$scope', function($scope) {
-        $scope.width = parseInt($scope.width, BASE_TEN) || 560;
-        $scope.height = parseInt($scope.height, BASE_TEN) || 315;
         $scope.video_src = ytCreateEmbedURL($scope.video_id);
+        $scope.video_poster = ytCreatePosterUrl($scope.video_id);
       }],
       scope: {
-        video_id: '@ytVideoPlayer',
-        width: '@width',
-        height: '@height'
+        video_id: '@ytVideoPlayer'
       },
-      template: '<iframe ng-src="{{ video_src }}" ' +
-                        'class="yt-video-player"></iframe>',
+      template: '<div class="yt-player-container">' +
+                '  <div ng-if="active">' +
+                '    <iframe ng-src="{{ video_src }}" class="yt-video-player"></iframe>' +
+                '  </div>' +
+                '  <div ng-click="active=true" ng-hide="active" class="yt-video-poster">' +
+                '    <img ng-src="{{ video_poster }}" />' +
+                '    <span class="yt-video-play-button fa fa-play"></span>' +
+                '  </div>' +
+                '</div>',
       replace: true
     };
   }]);

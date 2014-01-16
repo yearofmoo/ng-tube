@@ -107,7 +107,8 @@ module.exports = function(grunt) {
           'bower_components/nprogress/nprogress.js',
           'app/scripts/ytCore.js',
           'app/scripts/ytCore.js',
-          'app/scripts/ntApp.js'
+          'app/scripts/ntApp.js',
+          'app/scripts/ntAppAnimations.js'
         ]
       },
     },

@@ -34,7 +34,7 @@
     <div class="nt-videos-list row nt-grid">
       <div ng-include="tpl('video-listing')"
            ng-repeat="video in videos | limit:24"
-           class="nt-videos-list-entry col fade-listing"
+           class="nt-videos-list-entry col repeater"
            ng-class="{
             'detail-layout col-md-6'  : isLayout('details'),
             'picture-layout col-md-3' : isLayout('pictures')

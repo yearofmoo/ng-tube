@@ -37,7 +37,7 @@
       <div class="nt-video-comments">
         <div ng-repeat="comment in video_comments | filter:q | limit:12"
              ng-class-even="'even'"
-             class="nt-video-comment row">
+             class="nt-video-comment row nt-expand">
                <strong class="col-md-2">
                  <span class="fa fa-user"></span>
                  {{ comment.author }}:

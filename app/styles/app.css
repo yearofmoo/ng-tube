@@ -2,10 +2,6 @@ select, input, option {
   font-family: 'Open Sans';
 }
 
-#view-container {
-  padding-top:50px;
-}
-
 .nt-videos-list-entry {
   position:relative;
   border:1px solid black;
@@ -264,4 +260,10 @@ select, input, option {
 
 .nt-player-videos {
   position:relative;
+}
+
+.nt-video-comment {
+  position:relative;
+  box-sizing:border-box;
+  overflow:hidden;
 }
