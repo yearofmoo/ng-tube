@@ -1,4 +1,4 @@
-# O'Reilly - AngularJS Inside-out
+# ng-tube
 
 A sleek AngularJS Application to browse youtube videos
 
