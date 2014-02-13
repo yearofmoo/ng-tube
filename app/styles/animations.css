@@ -83,20 +83,8 @@
   opacity:0;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-.xrepeater.ng-enter-stagger,
-.xrepeater.ng-leave-stagger {
+.repeater.ng-enter-stagger,
+.repeater.ng-leave-stagger {
   -webkit-transition-delay:0.1s;
   transition-delay:0.1s;
 
